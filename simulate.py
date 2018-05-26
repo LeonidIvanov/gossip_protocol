@@ -3,7 +3,7 @@ import argparse
 from random import randint
 
 
-def gossip_protocol(n=20, x=4):
+def gossip_protocol(n, x):
     remaining_nodes = list(range(n))
     infected_nodes = [0]
     buffer = [0]
@@ -24,7 +24,7 @@ def gossip_protocol(n=20, x=4):
         return 0
 
 
-def gossip_protocol_advanced(n=20, x=4):
+def gossip_protocol_advanced(n, x):
     remaining_nodes = list(range(n))
     infected_nodes = [0]
     buffer = [0]
@@ -58,9 +58,9 @@ def protocol_iterator(n, x, iterations, protocol=gossip_protocol):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-n', help="Number of nodes you wish to simulate.", type=int)
-    parser.add_argument('-i', help="Number of simulations you want to run", type=int)
-    parser.add_argument('-x', help="Number of random nodes to use in one step", type=int)
+    parser.add_argument('-n', help="Number of nodes you wish to simulate.", type=int, default=20)
+    parser.add_argument('-i', help="Number of simulations you want to run", type=int, default=1000)
+    parser.add_argument('-x', help="Number of random nodes to use in one step", type=int, default=4)
     parser.add_argument('-a', '--gossip-protocol-advanced',
                         help="Run simulation using advanced protocol",
                         action="store_true",
