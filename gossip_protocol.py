@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-import sys
+import argparse
 from random import randint
-
-print(sys.argv)
 
 
 def gossip_protocol(n=20, x=4):
@@ -51,7 +49,7 @@ def gossip_protocol_advanced(n=20, x=4):
         return 0
 
 
-def protocol_iterator(n, x, iterations=1000, protocol=gossip_protocol):
+def protocol_iterator(n, x, iterations, protocol=gossip_protocol):
     success_count = 0
     for i in range(iterations):
         success_count += protocol(n, x)
@@ -59,4 +57,18 @@ def protocol_iterator(n, x, iterations=1000, protocol=gossip_protocol):
 
 
 if __name__ == "__main__":
-    protocol_iterator(n=20, x=4, protocol=gossip_protocol)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-n', help="Number of nodes you wish to simulate.", type=int)
+    parser.add_argument('-i', help="Number of simulations you want to run", type=int)
+    parser.add_argument('-x', help="Number of random nodes to use in one step", type=int)
+    parser.add_argument('-a', '--gossip-protocol-advanced',
+                        help="Run simulation using advanced protocol",
+                        action="store_true",
+                        )
+
+    args = parser.parse_args()
+
+    if args.gossip_protocol_advanced:
+        protocol_iterator(n=args.n, x=args.x, iterations=args.i, protocol=gossip_protocol_advanced)
+    else:
+        protocol_iterator(n=args.n, x=args.x, iterations=args.i, protocol=gossip_protocol)
